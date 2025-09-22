@@ -27,12 +27,5 @@ dependencies {
 }
 
 test {
-    useJUnitPlatform {
-        // Exclude tests with the 'FailingTest' tag from running during the build
-        excludeTags 'FailingTest'
-    }
-    seeing eeing test results
-    testLogging {
-        events "passed", "skipped", "failed"
-    }
+    useJUnitPlatform()
 }
