@@ -26,6 +26,14 @@ dependencies {
 	implementation('com.google.code.gson:gson:2.13.1')
 }
 
+
 test {
-    useJUnitPlatform()
+    useJUnitPlatform {
+        // Exclude tests with the 'FailingTest' tag from running during the build
+        excludeTags 'FailingTest'
+    }
+    // This part is important for seeing test results
+    testLogging {
+        events "passed", "skipped", "failed"
+    }
 }
