@@ -1,6 +1,7 @@
 package emptyimplementations;
 
 import processapi.DataStorageAPI;
+import processapi.IntegerStream;
 import processapi.ReadRequest;
 import processapi.ReadResponse;
 import processapi.WriteRequest;
@@ -15,6 +16,8 @@ public class ProcessAPIImpl implements DataStorageAPI {
 	// Reads data from a source.
 	@Override
 	public ReadResponse readData(ReadRequest request) {
+		// Return a default failure response with an empty stream to avoid errors.
+		IntegerStream emptyStream = new IntegerStreamImpl();
 		return new ReadResponseImpl();
 	}
 
