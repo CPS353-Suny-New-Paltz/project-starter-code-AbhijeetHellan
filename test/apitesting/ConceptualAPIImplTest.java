@@ -57,12 +57,12 @@ public class ConceptualAPIImplTest {
 		assertEquals(ComputationResultCode.SUCCESS, response.getResultCode());
 	}
 
-
 	@Test
 	public void testComputeWithInvalidNumber() {
+		// This will throw an exception with current implementation
+		assertThrows(IllegalArgumentException.class, () -> conceptualAPI.compute(new ComputeRequest(-1)));
 		// Negative (or otherwise invalid) input
 		ComputeRequest request = new ComputeRequest(-1);
-		 assertThrows(IllegalArgumentException.class, () -> conceptualAPI.compute(request));
 
 		ComputeResponse response = conceptualAPI.compute(request);
 
