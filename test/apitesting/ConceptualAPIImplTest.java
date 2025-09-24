@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
@@ -61,6 +62,7 @@ public class ConceptualAPIImplTest {
 	public void testComputeWithInvalidNumber() {
 		// Negative (or otherwise invalid) input
 		ComputeRequest request = new ComputeRequest(-1);
+		 assertThrows(IllegalArgumentException.class, () -> conceptualAPI.compute(request));
 
 		ComputeResponse response = conceptualAPI.compute(request);
 
