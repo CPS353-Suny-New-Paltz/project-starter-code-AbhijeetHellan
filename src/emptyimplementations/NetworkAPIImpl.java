@@ -1,17 +1,20 @@
 package emptyimplementations;
 
+import conceptualapi.ComputationAPI;
 import networkapi.ComputeEngine;
 import networkapi.JobResponse;
 import networkapi.JobSubmission;
 import processapi.DataStorageAPI;
 
-	// Implementation of the ComputeEngine interface with unimplemented methods.
+// Implementation of the ComputeEngine interface with unimplemented methods.
 public class NetworkAPIImpl implements ComputeEngine {
-	// Reference to the DataStorageAPI, not used in current implementation.
+	// Dependencies on DataStorageAPI and ComputationAPI
 	private DataStorageAPI dataStore;
+	private ComputationAPI computation;
 
-	public NetworkAPIImpl(DataStorageAPI dataStore) {
+	public NetworkAPIImpl(DataStorageAPI dataStore, ComputationAPI computation) {
 		this.dataStore = dataStore;
+		this.computation = computation;
 	}
 
 	@Override
