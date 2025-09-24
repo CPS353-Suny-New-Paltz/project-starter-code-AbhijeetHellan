@@ -13,18 +13,18 @@ import processapi.WriteResponse;
 */
 public class ProcessAPIImpl implements DataStorageAPI {
 
-	// Reads data from a source.
-	@Override
-	public ReadResponse readData(ReadRequest request) {
-		// Return a default failure response with an empty stream to avoid errors.
-		IntegerStream emptyStream = new IntegerStreamImpl();
-		return new ReadResponseImpl();
-	}
+    @Override
+    public ReadResponse readData(ReadRequest request) {
+        // Create a default empty stream to avoid null errors
+        IntegerStream emptyStream = new IntegerStreamImpl();
+        
+        // Use the new constructor to provide a failure status
+        return new ReadResponseImpl(false, emptyStream);
+    }
 
-	// Writes data to a destination.
-	@Override
-	public WriteResponse writeData(WriteRequest request) {
-		// Return a default failure response as the logic is not implemented.
-		return new WriteResponseImpl();
-	}
+    @Override
+    public WriteResponse writeData(WriteRequest request) {
+        // Use the new constructor to provide a failure status
+        return new WriteResponseImpl(false);
+    }
 }
