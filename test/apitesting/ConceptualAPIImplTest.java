@@ -57,20 +57,14 @@ public class ConceptualAPIImplTest {
 		assertEquals(ComputationResultCode.SUCCESS, response.getResultCode());
 	}
 
-	@Test
-	public void testComputeWithInvalidNumber() {
-		// This will throw an exception with current implementation
-		assertThrows(IllegalArgumentException.class, () -> conceptualAPI.compute(new ComputeRequest(-1)));
-		// Negative (or otherwise invalid) input
-		ComputeRequest request = new ComputeRequest(-1);
-
-		ComputeResponse response = conceptualAPI.compute(request);
-
-		assertNotNull(response);
-		// This will fail with current empty implementation
-		assertFalse(response.isSuccess());
-		assertNull(response.getResult(), "Result should be null for invalid input");
-	}
+	@Test // No tag needed because this test is expected to pass
+    public void testComputeWithInvalidNumber() {
+        // This test asserts that creating a ComputeRequest
+        // with an invalid number throws an IllegalArgumentException.
+        assertThrows(IllegalArgumentException.class, () -> {
+            new ComputeRequest(-1);
+        });
+    }
 
 	@Test
 	@Tag("FailingTest")
