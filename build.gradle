@@ -30,7 +30,4 @@ test {
     useJUnitPlatform {
         excludeTags 'FailingTest'
     }
-    testLogging {
-        events "passed", "skipped", "failed"
-    }
 }
