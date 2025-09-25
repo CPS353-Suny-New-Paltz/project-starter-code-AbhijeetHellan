@@ -32,8 +32,3 @@ test {
         // Exclude tests with the 'FailingTest' tag from running during the build
         excludeTags 'FailingTest'
     }
-    // This part is important for seeing test results
-    testLogging {
-        events "passed", "skipped", "failed"
-    }
-}
