@@ -26,7 +26,6 @@ dependencies {
 	implementation('com.google.code.gson:gson:2.13.1')
 }
 
-
 test {
     useJUnitPlatform {
         // Exclude tests with the 'FailingTest' tag from running during the build
