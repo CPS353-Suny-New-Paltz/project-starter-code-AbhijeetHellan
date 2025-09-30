@@ -8,6 +8,7 @@ import conceptualapi.ComputationAPI;
 import conceptualapi.ComputeRequest;
 import conceptualapi.ComputeResponse;
 import networkapi.ComputeEngine;
+import networkapi.Delimiters;
 import networkapi.JobResponse;
 import networkapi.JobStatus;
 import networkapi.JobSubmission;
@@ -44,14 +45,19 @@ public class NetworkAPIImpl implements ComputeEngine {
 			List<Integer> numbers = readResponse.getIntegerStream().getNumbers();
 			// Prepare list to hold results
 			List<String> results = new ArrayList<>();
+
+			// Get the delimiters object from the request.
+			Delimiters delimiters = request.getDelimiters();
+			char separator = delimiters.getKeyValueSeparator();
+
 			// Compute each number
 			for (Integer number : numbers) {
 				ComputeRequest computeRequest = new ComputeRequest(number);
 				ComputeResponse computeResponse = computation.compute(computeRequest);
 
 				if (computeResponse.isSuccess()) {
-					// Store result in "number:words" format
-					results.add(number + ":" + computeResponse.getResult());
+					// Delimiters Logic
+					results.add(number + String.valueOf(separator) + computeResponse.getResult());
 				} else {
 					return new JobResponseImpl(jobId, false, "Computation failed for number: " + number,
 							JobStatus.FAILED);
