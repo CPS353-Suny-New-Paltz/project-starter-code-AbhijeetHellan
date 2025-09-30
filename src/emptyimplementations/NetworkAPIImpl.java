@@ -58,6 +58,8 @@ public class NetworkAPIImpl implements ComputeEngine {
 				if (computeResponse.isSuccess()) {
 					// Delimiters Logic
 					results.add(number + String.valueOf(separator) + computeResponse.getResult());
+					// Store result in "number:words" format
+					results.add(number + ":" + computeResponse.getResult());
 				} else {
 					return new JobResponseImpl(jobId, false, "Computation failed for number: " + number,
 							JobStatus.FAILED);
