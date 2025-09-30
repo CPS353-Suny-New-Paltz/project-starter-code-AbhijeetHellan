@@ -4,26 +4,44 @@ import networkapi.JobResponse;
 import networkapi.JobStatus;
 
 public class JobResponseImpl implements JobResponse {
-	public JobResponseImpl() {
+    private String jobId;
+    private boolean success;
+    private String message;
+    private JobStatus status;
+    
+    // Default constructor for failures
+    public JobResponseImpl() {
+        this.jobId = "";
+        this.success = false;
+        this.message = "Operation failed.";
+        this.status = JobStatus.FAILED;
+    }
+    
+    // Constructor with parameters
+    public JobResponseImpl(String jobId, boolean success, String message, JobStatus status) {
+        this.jobId = jobId;
+        this.success = success;
+        this.message = message;
+        this.status = status;
+    }
 
-	}
-	@Override
-	public String getJobId() {
-		return ""; // Return empty string instead of null
-	}
+    @Override
+    public String getJobId() {
+        return jobId;
+    }
 
-	@Override
-	public boolean isSuccess() {
-		return false;
-	}
+    @Override
+    public boolean isSuccess() {
+        return success;
+    }
 
-	@Override
-	public String getMessage() {
-		return "Operation failed."; // Return default message instead of null
-	}
+    @Override
+    public String getMessage() {
+        return message;
+    }
 
-	@Override
-	public JobStatus getStatus() {
-		return JobStatus.FAILED; // Return a default status instead of null
-	}
+    @Override
+    public JobStatus getStatus() {
+        return status;
+    }
 }
