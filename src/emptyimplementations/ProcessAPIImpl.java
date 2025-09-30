@@ -37,7 +37,7 @@ public class ProcessAPIImpl implements DataStorageAPI {
 				}
 			}
 
-			IntegerStream stream = new IntegerStreamImpl();
+			IntegerStream stream = new IntegerStreamImpl(numbers);
 			return new ReadResponseImpl(true, stream);
 
 		} catch (IOException e) {
