@@ -29,7 +29,7 @@ public class ProcessAPIImplTest {
 	@Test
 	public void testReadData() {
 		// Create a read request with a valid source
-		ReadRequest readRequest = new ReadRequest("C:/Users/abhij/OneDrive/Documents/GitHub/project-starter-code-AbhijeetHellan/Resources/Input.txt");
+        ReadRequest readRequest = new ReadRequest("resources/Output.txt");
 		// Read data using the storage API
 		ReadResponse readResponse = processAPI.readData(readRequest);
 		// Verify the response from the empty implementation
@@ -43,7 +43,7 @@ public class ProcessAPIImplTest {
 	public void testWriteData() {
 		// Arrange: Create some formatted results and a write request
 		List<String> formattedResults = Arrays.asList("1:one", "21:twenty-one", "105:one hundred five");
-		WriteRequest writeRequest = new WriteRequest("C:/Users/abhij/OneDrive/Documents/Github/project-starter-code-AbhijeetHellan/Resources/Output.txt", formattedResults);
+		WriteRequest writeRequest = new WriteRequest("resources/Output.txt", formattedResults);
 		// Write data using the storage API
 		WriteResponse writeResponse = processAPI.writeData(writeRequest);
 		// Verifying the response
