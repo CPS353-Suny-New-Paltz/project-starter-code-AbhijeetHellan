@@ -29,7 +29,7 @@ public class ProcessAPIImplTest {
 	@Test
 	public void testReadData() {
 		// Create a read request with a valid source
-        ReadRequest readRequest = new ReadRequest("resources/Output.txt");
+        ReadRequest readRequest = new ReadRequest("resources/Input.txt");
 		// Read data using the storage API
 		ReadResponse readResponse = processAPI.readData(readRequest);
 		// Verify the response from the empty implementation
