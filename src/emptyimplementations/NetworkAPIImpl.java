@@ -107,7 +107,7 @@ public class NetworkAPIImpl implements ComputeEngine {
             return new JobResponseImpl("", false, "Job ID cannot be null or empty", JobStatus.FAILED);
         }
 
-        // Exception handeling
+        // Exception handling
         try {
             // All non-empty string values are valid for job ID lookup
             return new JobResponseImpl(jobId, true, "Job status retrieved", JobStatus.COMPLETED);
@@ -125,7 +125,7 @@ public class NetworkAPIImpl implements ComputeEngine {
             return new JobResponseImpl("", false, "Job ID cannot be null or empty", JobStatus.FAILED);
         }
 
-        // exception handeling
+        // exception handling
         try {
             // All non-empty string values are valid for job ID cancellation
             return new JobResponseImpl(jobId, true, "Job cancelled successfully", JobStatus.CANCELLED);
