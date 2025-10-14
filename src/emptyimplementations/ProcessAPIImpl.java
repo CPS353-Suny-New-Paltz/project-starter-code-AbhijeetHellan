@@ -1,14 +1,14 @@
 package emptyimplementations;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 import processapi.DataStorageAPI;
 import processapi.IntegerStream;
@@ -42,13 +42,23 @@ public class ProcessAPIImpl implements DataStorageAPI {
 			if (!inputFile.canRead()) {
 				return new ReadResponseImpl(false, null);
 			}
-			try (Scanner scanner = new Scanner(inputFile)) {
-				// Set the delimiter to a comma
-				scanner.useDelimiter(",");
 
-				// Loop through the file as long as there is another integer to read.
-				while (scanner.hasNextInt()) {
-					numbers.add(scanner.nextInt());
+			// MODIFICATION: Replaced Scanner with BufferedReader
+			try (BufferedReader reader = new BufferedReader(new FileReader(inputFile))) {
+				String line;
+				// Read the file line by line
+				while ((line = reader.readLine()) != null) {
+					// Split the line into parts based on the comma delimiter
+					String[] parts = line.split(",");
+					for (String part : parts) {
+						try {
+							// Trim any whitespace and parse the string to an integer
+							numbers.add(Integer.parseInt(part.trim()));
+						} catch (NumberFormatException e) {
+							// This handles cases where a part of the line is not a valid number
+							System.err.println("Skipping invalid number format: " + part);
+						}
+					}
 				}
 			}
 
@@ -56,7 +66,7 @@ public class ProcessAPIImpl implements DataStorageAPI {
 			return new ReadResponseImpl(true, stream);
 
 		} catch (IOException e) {
-			// This catches errors like the file not being found.
+			// This catches file-related errors from the BufferedReader
 			return new ReadResponseImpl(false, null);
 		}
 	}
