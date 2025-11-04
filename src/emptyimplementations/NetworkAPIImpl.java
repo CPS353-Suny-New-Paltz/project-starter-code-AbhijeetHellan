@@ -6,8 +6,10 @@ import java.util.List;
 import conceptualapi.ComputeRequest;
 import conceptualapi.ComputeResponse;
 import processapi.DataStorageAPI;
+import project.annotations.NetworkAPI;
 import conceptualapi.ComputationAPI;
 
+@NetworkAPI
 public class NetworkAPIImpl extends AbstractNetworkAPIImpl {
 
 	public NetworkAPIImpl(DataStorageAPI dataStore, ComputationAPI computation) {
@@ -31,7 +33,7 @@ public class NetworkAPIImpl extends AbstractNetworkAPIImpl {
 				throw new Exception("Computation failed for number: " + number);
 			}
 		}
-		
+
 		return results;
 	}
 }
