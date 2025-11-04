@@ -21,12 +21,14 @@ public class MultiThreadedNetworkAPIImpl extends AbstractNetworkAPIImpl {
 	public MultiThreadedNetworkAPIImpl(DataStorageAPI dataStore, ComputationAPI computation) {
 		super(dataStore, computation);
 		
+		// Create fixed thread pool use min of MAX_THREADS and available processors
 		int threadCount = Math.min(MAX_THREADS, Runtime.getRuntime().availableProcessors());
 		this.executorService = Executors.newFixedThreadPool(threadCount);
 	}
 
 	@Override
 	protected List<String> processNumbers(List<Integer> numbers, char separator) throws Exception {
+		// MULTI-THREADED PROCESSING Submit all tasks to thread pool
 		List<Future<String>> futures = new ArrayList<>();
 		
 		for (Integer number : numbers) {
@@ -48,10 +50,11 @@ public class MultiThreadedNetworkAPIImpl extends AbstractNetworkAPIImpl {
 			futures.add(future);
 		}
 
+		// Collect results in order (maintains input order)
 		List<String> results = new ArrayList<>();
 		for (Future<String> future : futures) {
 			try {
-				results.add(future.get(30, TimeUnit.SECONDS)); 
+				results.add(future.get(30, TimeUnit.SECONDS)); // 30 second timeout
 			} catch (TimeoutException e) {
 				throw new Exception("Computation timed out");
 			} catch (ExecutionException e) {
