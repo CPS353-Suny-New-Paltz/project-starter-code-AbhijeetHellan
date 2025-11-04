@@ -15,7 +15,7 @@ import org.junit.jupiter.api.Test;
 
 import conceptualapi.ComputationAPI;
 import emptyimplementations.ConceptualAPIImpl;
-import emptyimplementations.NetworkAPIImpl;
+import emptyimplementations.MultiThreadedNetworkAPIImpl;
 import emptyimplementations.ProcessAPIImpl;
 import networkapi.ComputeEngine;
 import processapi.DataStorageAPI;
@@ -23,14 +23,14 @@ import processapi.DataStorageAPI;
 public class TestMultiUser {
 
 	private ComputeEngine coordinator;
-	private NetworkAPIImpl networkAPI;
+	private MultiThreadedNetworkAPIImpl networkAPI;
 
 	@BeforeEach
 	public void initializeComputeEngine() {
 		DataStorageAPI dataStorage = new ProcessAPIImpl();
 		ComputationAPI computation = new ConceptualAPIImpl();
 
-		networkAPI = new NetworkAPIImpl(dataStorage, computation);
+		networkAPI = new MultiThreadedNetworkAPIImpl(dataStorage, computation);
 		coordinator = networkAPI;
 	}
 
