@@ -13,16 +13,14 @@ import conceptualapi.ComputationAPI;
 import conceptualapi.ComputeRequest;
 import conceptualapi.ComputeResponse;
 import processapi.DataStorageAPI;
-import project.annotations.NetworkAPI;
 
-@NetworkAPI
 public class MultiThreadedNetworkAPIImpl extends AbstractNetworkAPIImpl {
 	private final ExecutorService executorService;
 	private static final int MAX_THREADS = 8;
 
 	public MultiThreadedNetworkAPIImpl(DataStorageAPI dataStore, ComputationAPI computation) {
 		super(dataStore, computation);
-
+		
 		// Create fixed thread pool use min of MAX_THREADS and available processors
 		int threadCount = Math.min(MAX_THREADS, Runtime.getRuntime().availableProcessors());
 		this.executorService = Executors.newFixedThreadPool(threadCount);
@@ -32,7 +30,7 @@ public class MultiThreadedNetworkAPIImpl extends AbstractNetworkAPIImpl {
 	protected List<String> processNumbers(List<Integer> numbers, char separator) throws Exception {
 		// MULTI-THREADED PROCESSING Submit all tasks to thread pool
 		List<Future<String>> futures = new ArrayList<>();
-
+		
 		for (Integer number : numbers) {
 			Future<String> future = executorService.submit(() -> {
 				try {
@@ -48,22 +46,22 @@ public class MultiThreadedNetworkAPIImpl extends AbstractNetworkAPIImpl {
 					throw new RuntimeException("Error processing number " + number + ": " + e.getMessage());
 				}
 			});
-
+			
 			futures.add(future);
 		}
 
-		// Collect results in order
+		// Collect results in order 
 		List<String> results = new ArrayList<>();
 		for (Future<String> future : futures) {
 			try {
-				results.add(future.get(30, TimeUnit.SECONDS));
+				results.add(future.get(30, TimeUnit.SECONDS)); 
 			} catch (TimeoutException e) {
 				throw new Exception("Computation timed out");
 			} catch (ExecutionException e) {
 				throw new Exception("Computation error: " + e.getCause().getMessage());
 			}
 		}
-
+		
 		return results;
 	}
 

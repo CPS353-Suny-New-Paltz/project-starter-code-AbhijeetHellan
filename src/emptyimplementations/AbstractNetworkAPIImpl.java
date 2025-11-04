@@ -14,9 +14,7 @@ import processapi.ReadRequest;
 import processapi.ReadResponse;
 import processapi.WriteRequest;
 import processapi.WriteResponse;
-import project.annotations.NetworkAPI;
 
-@NetworkAPI
 public abstract class AbstractNetworkAPIImpl implements ComputeEngine {
 	protected DataStorageAPI dataStore;
 	protected ComputationAPI computation;
@@ -31,21 +29,22 @@ public abstract class AbstractNetworkAPIImpl implements ComputeEngine {
 	@Override
 	public JobResponse submitJob(JobSubmission request) {
 		// Parameter validation checks for null and invalid parameters
-		if (request == null) {
-			String jobId = UUID.randomUUID().toString();
-			return new JobResponseImpl(jobId, false, "Job request cannot be null", JobStatus.FAILED);
-		}
-
-		if (request.getInputSource() == null || request.getInputSource().trim().isEmpty()) {
-			String jobId = UUID.randomUUID().toString();
-			return new JobResponseImpl(jobId, false, "Input source cannot be null or empty", JobStatus.FAILED);
-		}
-
-		if (request.getOutputSource() == null || request.getOutputSource().trim().isEmpty()) {
-			String jobId = UUID.randomUUID().toString();
-			return new JobResponseImpl(jobId, false, "Output source cannot be null or empty", JobStatus.FAILED);
-		}
-
+	    if (request == null) {
+	        String jobId = UUID.randomUUID().toString();
+	        return new JobResponseImpl(jobId, false, "Job request cannot be null", JobStatus.FAILED);
+	    }
+	    
+	    if (request.getInputSource() == null || request.getInputSource().trim().isEmpty()) {
+	        String jobId = UUID.randomUUID().toString();
+	        return new JobResponseImpl(jobId, false, "Input source cannot be null or empty", JobStatus.FAILED);
+	    }
+	    
+	    if (request.getOutputSource() == null || request.getOutputSource().trim().isEmpty()) {
+	        String jobId = UUID.randomUUID().toString();
+	        return new JobResponseImpl(jobId, false, "Output source cannot be null or empty", JobStatus.FAILED);
+	    }
+	    
+		
 		try {
 			String jobId = UUID.randomUUID().toString();
 
@@ -85,38 +84,39 @@ public abstract class AbstractNetworkAPIImpl implements ComputeEngine {
 		}
 	}
 
-	@Override
-	public JobResponse getJobStatus(String jobId) {
-		// parameter validation
-		if (jobId == null || jobId.trim().isEmpty()) {
-			return new JobResponseImpl("", false, "Job ID cannot be null or empty", JobStatus.FAILED);
-		}
+    @Override
+    public JobResponse getJobStatus(String jobId) {
+        // parameter validation
+        if (jobId == null || jobId.trim().isEmpty()) {
+            return new JobResponseImpl("", false, "Job ID cannot be null or empty", JobStatus.FAILED);
+        }
 
-		// Exception handling
-		try {
-			// All non-empty string values are valid for job ID lookup
-			return new JobResponseImpl(jobId, true, "Job status retrieved", JobStatus.COMPLETED);
-		} catch (Exception e) {
-			// Handle unexpected errors during status lookup
-			return new JobResponseImpl(jobId, false, "Failed to retrieve job status: " + e.getMessage(),
-					JobStatus.FAILED);
-		}
-	}
+        // Exception handling
+        try {
+            // All non-empty string values are valid for job ID lookup
+            return new JobResponseImpl(jobId, true, "Job status retrieved", JobStatus.COMPLETED);
+        } catch (Exception e) {
+            // Handle unexpected errors during status lookup
+            return new JobResponseImpl(jobId, false, "Failed to retrieve job status: " + e.getMessage(), 
+                    JobStatus.FAILED);
+        }
+    }
 
-	@Override
-	public JobResponse cancelJob(String jobId) {
-		// parameter validation
-		if (jobId == null || jobId.trim().isEmpty()) {
-			return new JobResponseImpl("", false, "Job ID cannot be null or empty", JobStatus.FAILED);
-		}
+    @Override
+    public JobResponse cancelJob(String jobId) {
+        // parameter validation
+        if (jobId == null || jobId.trim().isEmpty()) {
+            return new JobResponseImpl("", false, "Job ID cannot be null or empty", JobStatus.FAILED);
+        }
 
-		// exception handling
-		try {
-			// All non-empty string values are valid for job ID cancellation
-			return new JobResponseImpl(jobId, true, "Job cancelled successfully", JobStatus.CANCELLED);
-		} catch (Exception e) {
-			// Handle unexpected errors during cancellation
-			return new JobResponseImpl(jobId, false, "Failed to cancel job: " + e.getMessage(), JobStatus.FAILED);
-		}
-	}
+        // exception handling
+        try {
+            // All non-empty string values are valid for job ID cancellation
+            return new JobResponseImpl(jobId, true, "Job cancelled successfully", JobStatus.CANCELLED);
+        } catch (Exception e) {
+            // Handle unexpected errors during cancellation
+            return new JobResponseImpl(jobId, false, "Failed to cancel job: " + e.getMessage(), 
+                    JobStatus.FAILED);
+        }
+    }
 }
