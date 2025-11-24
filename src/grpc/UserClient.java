@@ -2,7 +2,13 @@ package grpc;
 
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
-import grpc.computeengine.*;
+
+import grpc.computeengine.ComputeEngineServiceGrpc;
+import grpc.computeengine.JobRequest;
+import grpc.computeengine.JobResponse;
+import grpc.computeengine.ShutdownRequest;
+import grpc.computeengine.ShutdownResponse;
+
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -10,7 +16,7 @@ import java.nio.file.Paths;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
-public class UserClient {
+class UserClient {
 	private final ManagedChannel channel;
 	private final ComputeEngineServiceGrpc.ComputeEngineServiceBlockingStub stub;
 	private static final String RESOURCES_DIR = "Resources";

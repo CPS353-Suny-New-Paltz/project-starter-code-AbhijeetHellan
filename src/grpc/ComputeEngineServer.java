@@ -55,6 +55,7 @@ public class ComputeEngineServer {
 				dataStoreClient.shutdown(shutdownReq);
 				dataStoreClient.shutdown();
 			} catch (Exception e) {
+				// Ignore errors during shutdown
 			}
 		}
 
