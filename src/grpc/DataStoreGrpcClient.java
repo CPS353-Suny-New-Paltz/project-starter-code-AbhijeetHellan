@@ -22,7 +22,10 @@ class DataStoreGrpcClient implements DataStorageAPI {
 	private final DataStoreServiceGrpc.DataStoreServiceBlockingStub stub;
 
 	public DataStoreGrpcClient(String host, int port) {
-		this.channel = ManagedChannelBuilder.forAddress(host, port).usePlaintext().build();
+		this.channel = ManagedChannelBuilder.forAddress(host, port)
+	            .usePlaintext()
+	            .maxInboundMessageSize(64 * 1024 * 1024) // updated to allow up to 64 MB input
+	            .build();
 		this.stub = DataStoreServiceGrpc.newBlockingStub(channel);
 		System.out.println("  Connected to Data Store at " + host + ":" + port);
 	}
