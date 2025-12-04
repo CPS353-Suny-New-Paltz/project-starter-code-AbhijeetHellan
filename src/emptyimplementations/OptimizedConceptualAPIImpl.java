@@ -10,7 +10,9 @@ import conceptualapi.ComputeResponse;
 
 //Bottleneck identified with JConsole: high CPU usage in ConceptualAPIImpl.convertNumberToWords()
 //when processing large batches of numbers due to repeated string concatenation.
-//Optimization: replaced string concatenation with a single StringBuilder to reduce allocations.
+//Optimization 1: Replaced string concatenation with StringBuilder to reduce allocations.
+//Optimization 2: Added HashMap cache to avoid recomputing the same number conversions.
+//Optimization 3: Added cache (max 20,000 entries) that clears when full to prevent memory growth.
 public class OptimizedConceptualAPIImpl implements ComputationAPI {
 
 	String[] units = { "", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven",
@@ -19,7 +21,9 @@ public class OptimizedConceptualAPIImpl implements ComputationAPI {
 	String[] tens = { "", "", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety" };
 
 	String[] scales = { "", "thousand", "million", "billion" };
-
+	
+	// Max cache size
+	private static final int MAX_CACHE_SIZE = 20_000;
     // Cache for memoization (number -> words)
     private final Map<Integer, String> cache = new HashMap<>();
 
@@ -53,6 +57,10 @@ public class OptimizedConceptualAPIImpl implements ComputationAPI {
             return cached;
         }
         String result = convertPositiveNumber(number);
+     // Clear cache if it gets too big, then add new entry
+        if (cache.size() >= MAX_CACHE_SIZE) {
+            cache.clear();
+        }
         cache.put(number, result);
         return result;
     }
