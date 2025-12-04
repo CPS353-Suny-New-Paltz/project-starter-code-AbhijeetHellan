@@ -4,9 +4,8 @@ import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 import conceptualapi.ComputationAPI;
-import emptyimplementations.ConceptualAPIImpl;
 import emptyimplementations.MultiThreadedNetworkAPIImpl;
-
+import emptyimplementations.OptimizedConceptualAPIImpl;
 import grpc.computeengine.ComputeEngineServiceGrpc;
 import grpc.computeengine.JobCancelRequest;
 import grpc.computeengine.JobRequest;
@@ -98,9 +97,9 @@ public class ComputeEngineServer {
 		private final ComputeEngineServer parentServer;
 
 		public ComputeEngineServiceImpl(DataStoreGrpcClient dataStore, ComputeEngineServer parentServer) {
-			ComputationAPI computation = new ConceptualAPIImpl();
-			this.computeEngine = new MultiThreadedNetworkAPIImpl(dataStore, computation);
-			this.parentServer = parentServer;
+		    ComputationAPI computation = new OptimizedConceptualAPIImpl();
+		    this.computeEngine = new MultiThreadedNetworkAPIImpl(dataStore, computation);
+		    this.parentServer = parentServer;
 		}
 
 		@Override
